@@ -1,0 +1,1698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamCraft Projects - 24/7 Emergency Response</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #FFD700;
+            --dark-gold: #B8860B;
+            --dark-grey: #1a1a1a;
+            --medium-grey: #2d2d2d;
+            --light-grey: #4a4a4a;
+            --text-light: #e0e0e0;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: var(--dark-grey);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0a0a0a, #1a1a1a, #2a2a2a);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: var(--gold);
+            opacity: 0.1;
+            border-radius: 50%;
+            animation: float 20s infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% { opacity: 0.1; }
+            90% { opacity: 0.1; }
+            100% {
+                transform: translateY(-100vh) translateX(50px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(26, 26, 26, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 3rem;
+            border-bottom: 2px solid var(--gold);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Hamburger Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            z-index: 1002;
+            position: relative;
+            width: 30px;
+            height: 25px;
+        }
+
+        .menu-toggle span {
+            background: var(--gold);
+            height: 3px;
+            width: 100%;
+            margin-bottom: 5px;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -6px);
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            left: -100%;
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(135deg, var(--dark-grey) 0%, var(--medium-grey) 100%);
+            transition: left 0.3s ease;
+            z-index: 1001;
+            padding: 80px 30px 30px;
+            box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+            overflow-y: auto;
+        }
+
+        .mobile-menu.active {
+            left: 0;
+        }
+
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s;
+            z-index: 999;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .mobile-nav-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mobile-nav-links li {
+            margin-bottom: 20px;
+            opacity: 0;
+            transform: translateX(-20px);
+            animation: slideIn 0.3s forwards;
+        }
+
+        .mobile-nav-links li:nth-child(1) { animation-delay: 0.1s; }
+        .mobile-nav-links li:nth-child(2) { animation-delay: 0.15s; }
+        .mobile-nav-links li:nth-child(3) { animation-delay: 0.2s; }
+        .mobile-nav-links li:nth-child(4) { animation-delay: 0.25s; }
+        .mobile-nav-links li:nth-child(5) { animation-delay: 0.3s; }
+        .mobile-nav-links li:nth-child(6) { animation-delay: 0.35s; }
+
+        @keyframes slideIn {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .mobile-nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.2rem;
+            display: block;
+            padding: 10px;
+            border-left: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .mobile-nav-links a:hover {
+            color: var(--gold);
+            border-left-color: var(--gold);
+            padding-left: 20px;
+            background: rgba(255, 215, 0, 0.05);
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--gold);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-img {
+            height: 50px;
+            width: auto;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            transition: transform 0.3s;
+        }
+
+        .logo:hover .logo-img {
+            transform: scale(1.05);
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .logo-text .company-name {
+            font-size: 1.2rem;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .logo-text .tagline-small {
+            font-size: 0.7rem;
+            color: var(--text-light);
+            opacity: 0.8;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Sections with Enhanced Margins */
+        section {
+            padding: 140px 6rem;
+            max-width: 1600px;
+            margin: 0 auto;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+        }
+
+        /* Section Separators */
+        section::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 10%;
+            right: 10%;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+        }
+
+        /* Content Containers with Enhanced Margins */
+        .content-wrapper {
+            padding: 3rem 4rem;
+            margin: 3rem auto;
+            background: rgba(45, 45, 45, 0.3);
+            border-radius: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+            max-width: 90%;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Desktop View Extra Margins */
+        @media (min-width: 1200px) {
+            section {
+                padding: 160px 8rem;
+            }
+            
+            .services-grid,
+            .gallery-grid {
+                margin: 4rem 3rem;
+            }
+            
+            .about-content,
+            .contact-container {
+                padding: 4rem;
+                margin: 3rem;
+            }
+        }
+
+        @media (min-width: 1600px) {
+            section {
+                padding: 180px 10rem;
+            }
+        }
+
+        /* Enhanced Home Section */
+        #home {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 6rem;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 2;
+            animation: fadeInUp 1s ease;
+        }
+
+        .emergency-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255, 0, 0, 0.1);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            padding: 10px 20px;
+            border-radius: 30px;
+            margin-bottom: 2rem;
+            animation: fadeInDown 1s ease;
+        }
+
+        .pulse-dot {
+            width: 10px;
+            height: 10px;
+            background: #ff0000;
+            border-radius: 50%;
+            animation: pulse-red 2s infinite;
+        }
+
+        @keyframes pulse-red {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+        }
+
+        .emergency-badge span:last-child {
+            color: #ff6b6b;
+            font-weight: bold;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-size: 4rem;
+            background: linear-gradient(45deg, var(--gold), #fff, var(--gold));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 3s ease infinite;
+            margin-bottom: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @keyframes gradientMove {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .tagline {
+            font-size: 1.4rem;
+            margin-bottom: 3rem;
+            color: var(--text-light);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-top: 4rem;
+            flex-wrap: wrap;
+        }
+
+        .stat-card {
+            background: rgba(45, 45, 45, 0.6);
+            padding: 1.5rem 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+            min-width: 140px;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--gold);
+            background: rgba(255, 215, 0, 0.1);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-mouse {
+            width: 30px;
+            height: 50px;
+            border: 2px solid var(--gold);
+            border-radius: 15px;
+            position: relative;
+        }
+
+        .scroll-wheel {
+            width: 6px;
+            height: 10px;
+            background: var(--gold);
+            border-radius: 3px;
+            position: absolute;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: scroll-wheel 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(10px); }
+        }
+
+        @keyframes scroll-wheel {
+            0% { top: 10px; opacity: 1; }
+            100% { top: 25px; opacity: 0; }
+        }
+
+        .phone-icon {
+            animation: ring 2s infinite;
+            display: inline-block;
+        }
+
+        @keyframes ring {
+            0%, 100% { transform: rotate(0deg); }
+            10%, 30% { transform: rotate(-10deg); }
+            20%, 40% { transform: rotate(10deg); }
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            border-radius: 50px;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, var(--gold), var(--dark-gold));
+            color: var(--dark-grey);
+            font-weight: bold;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--gold);
+            border: 2px solid var(--gold);
+        }
+
+        .btn-secondary:hover {
+            background: var(--gold);
+            color: var(--dark-grey);
+        }
+
+        /* Services */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 2rem;
+        }
+
+        .service-card {
+            background: linear-gradient(135deg, var(--medium-grey), rgba(45, 45, 45, 0.8));
+            padding: 2.5rem;
+            margin: 0.5rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Premium Service Cards */
+        .premium-card {
+            position: relative;
+            overflow: visible;
+        }
+
+        .service-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--gold);
+            color: var(--dark-grey);
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--gold), var(--dark-gold));
+            transform: translateX(-100%);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover::before {
+            transform: translateX(0);
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border-color: var(--gold);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: var(--gold);
+        }
+
+        /* About */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin: 2rem;
+            padding: 3rem;
+            background: rgba(45, 45, 45, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .about-text h2 {
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+            font-size: 2rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+
+        .stat-item {
+            background: linear-gradient(135deg, var(--medium-grey), rgba(45, 45, 45, 0.8));
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            transition: all 0.3s;
+        }
+
+        .stat-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.15);
+            border-color: var(--gold);
+        }
+
+        /* Enhanced About Section Styles */
+        .highlight-box {
+            background: rgba(255, 215, 0, 0.05);
+            border-left: 4px solid var(--gold);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 10px;
+        }
+
+        .about-features {
+            background: rgba(30, 30, 30, 0.5);
+            padding: 2rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .feature-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.1);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .feature-list li:hover {
+            padding-left: 10px;
+            background: rgba(255, 215, 0, 0.02);
+        }
+
+        .check-icon {
+            color: var(--gold);
+            margin-right: 1rem;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .cta-box {
+            background: rgba(255, 215, 0, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-top: 2rem;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+        }
+
+        /* Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin: 3rem 2rem;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 15px;
+            height: 280px;
+            background: var(--medium-grey);
+            cursor: pointer;
+            transition: all 0.4s;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 215, 0, 0.1);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.03) translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.2);
+            border-color: var(--gold);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* Contact Form */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            margin: 2rem;
+            padding: 3rem;
+            background: rgba(45, 45, 45, 0.3);
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+        }
+
+        .contact-info {
+            background: linear-gradient(135deg, var(--medium-grey), rgba(45, 45, 45, 0.8));
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .contact-item {
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            color: var(--gold);
+            font-size: 1.5rem;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+            color: var(--gold);
+        }
+
+        input, textarea, select {
+            padding: 0.8rem;
+            background: var(--medium-grey);
+            border: 1px solid var(--light-grey);
+            border-radius: 8px;
+            color: var(--text-light);
+            transition: border-color 0.3s;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: var(--gold);
+        }
+
+        /* Policy */
+        .policy-content {
+            background: linear-gradient(135deg, var(--medium-grey), rgba(45, 45, 45, 0.8));
+            padding: 3rem;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.2);
+            margin: 3rem 2rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .policy-item {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .policy-item::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* New Builds Section */
+        .new-builds-section {
+            margin-top: 5rem; 
+            padding: 3rem; 
+            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(30, 30, 30, 0.9)); 
+            border-radius: 30px; 
+            border: 2px solid var(--gold);
+        }
+
+        .slideshow-container {
+            width: 100%; 
+            height: 100%; 
+            position: relative;
+        }
+
+        .slide {
+            position: absolute; 
+            width: 100%; 
+            height: 100%; 
+            display: flex; 
+            align-items: flex-end;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        .coverage-map {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .state-badge {
+            background: var(--gold);
+            color: var(--dark-grey);
+            padding: 1rem 2rem;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+        }
+
+        .state-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--medium-grey);
+            text-align: center;
+            padding: 2rem;
+            border-top: 2px solid var(--gold);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 1s ease;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1rem 1rem;
+            }
+
+            .nav-container {
+                justify-content: space-between;
+            }
+
+            .menu-toggle {
+                display: flex;
+                order: 1;
+            }
+
+            .logo {
+                order: 2;
+                flex: 1;
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .logo-text .tagline-small {
+                display: none;
+            }
+
+            .logo-img {
+                height: 40px;
+            }
+
+            section {
+                padding: 80px 1rem;
+                min-height: auto;
+            }
+
+            #home {
+                padding: 100px 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+                line-height: 1.2;
+            }
+
+            h2 {
+                font-size: 1.8rem !important;
+            }
+
+            .tagline {
+                font-size: 1rem;
+                padding: 0 1rem;
+            }
+
+            .hero-stats {
+                gap: 1rem;
+                margin-top: 2rem;
+            }
+
+            .stat-card {
+                min-width: 120px;
+                padding: 1rem;
+            }
+
+            .stat-number {
+                font-size: 1.8rem;
+            }
+
+            .emergency-badge {
+                font-size: 0.8rem;
+                padding: 8px 15px;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                margin: 2rem 0;
+            }
+
+            .service-card {
+                padding: 2rem;
+                margin: 0;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                margin: 2rem 0;
+                gap: 1.5rem;
+            }
+
+            .gallery-item {
+                height: 200px;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem 1rem;
+                margin: 1rem 0;
+            }
+
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+                padding: 2rem 1rem;
+                margin: 1rem 0;
+            }
+
+            .policy-content {
+                padding: 2rem 1rem;
+                margin: 1rem 0;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                padding: 1rem;
+            }
+
+            .coverage-map {
+                gap: 1rem;
+                flex-wrap: wrap;
+            }
+
+            .state-badge {
+                padding: 0.8rem 1.5rem;
+                font-size: 0.9rem;
+            }
+
+            footer {
+                padding: 2rem 1rem;
+            }
+
+            footer img {
+                height: 100px !important;
+            }
+
+            .scroll-indicator {
+                bottom: 20px;
+            }
+
+            .contact-info {
+                padding: 2rem 1.5rem;
+            }
+
+            .contact-item {
+                margin-bottom: 1rem;
+            }
+
+            .stats {
+                grid-template-columns: 1fr 1fr;
+                gap: 1rem;
+            }
+
+            .stat-item {
+                padding: 1rem;
+            }
+
+            .feature-list li {
+                padding: 0.6rem 0;
+                font-size: 0.95rem;
+            }
+
+            .highlight-box {
+                padding: 1rem;
+                margin: 1rem 0;
+            }
+
+            .cta-box {
+                padding: 1.5rem 1rem;
+            }
+
+            .new-builds-section {
+                margin-top: 3rem;
+                padding: 2rem 1rem;
+            }
+
+            .video-showcase {
+                height: 300px !important;
+            }
+        }
+
+        @media (max-width: 480px) {
+            section {
+                padding: 60px 0.8rem;
+            }
+
+            #home {
+                padding: 80px 0.8rem;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            h2 {
+                font-size: 1.5rem !important;
+            }
+
+            h3 {
+                font-size: 1.2rem;
+            }
+
+            .tagline {
+                font-size: 0.95rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .stat-card {
+                width: 100%;
+                max-width: 200px;
+            }
+
+            .service-card {
+                padding: 1.5rem;
+            }
+
+            .service-icon {
+                font-size: 2.5rem;
+            }
+
+            .service-badge {
+                font-size: 0.7rem;
+                padding: 4px 10px;
+                top: -8px;
+                right: 15px;
+            }
+
+            .btn {
+                font-size: 0.95rem;
+                padding: 0.9rem 1.5rem;
+            }
+
+            .mobile-menu {
+                width: 250px;
+                padding: 70px 20px 20px;
+            }
+
+            .about-content,
+            .contact-container {
+                padding: 1.5rem 0.8rem;
+            }
+
+            footer {
+                font-size: 0.9rem;
+            }
+
+            footer img {
+                height: 80px !important;
+            }
+
+            p {
+                word-wrap: break-word;
+                overflow-wrap: break-word;
+            }
+
+            .video-showcase {
+                height: 250px !important;
+            }
+        }
+
+        /* Fix horizontal scroll issues */
+        @media (max-width: 768px) {
+            body {
+                overflow-x: hidden;
+            }
+
+            * {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="bg-particles" id="particles"></div>
+    
+    <!-- Loading Animation -->
+    <div id="loader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark-grey); z-index: 9999; display: flex; align-items: center; justify-content: center;">
+        <div style="text-align: center;">
+            <div style="width: 80px; height: 80px; border: 3px solid rgba(255, 215, 0, 0.3); border-top: 3px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
+            <p style="color: var(--gold); margin-top: 1rem; font-size: 1.2rem;">EMERGENCY ADMIN TEAM</p>
+        </div>
+    </div>
+
+    <style>
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="menu-toggle" id="menuToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <a href="#home" class="logo">
+                <img src="https://i.imgur.com/5259E7H.png" alt="DreamCraft Projects" class="logo-img" onerror="this.style.display='none'">
+                <div class="logo-text">
+                    <span class="company-name">DreamCraft Projects</span>
+                    <span class="tagline-small">YOUR DREAMS - OUR CRAFT</span>
+                </div>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#policy">Policy</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+        <ul class="mobile-nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#policy">Policy</a></li>
+        </ul>
+        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--light-grey);">
+            <p style="color: var(--gold); font-weight: bold;">24/7 Emergency</p>
+            <p style="color: var(--text-light); margin-top: 0.5rem;">0451 254 693</p>
+            <p style="color: var(--text-light);">0405 785 052</p>
+        </div>
+    </div>
+    <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+    <!-- Home Section -->
+    <section id="home">
+        <div class="hero-content">
+            <div class="emergency-badge">
+                <span class="pulse-dot"></span>
+                <span>EMERGENCY ADMIN TEAM</span>
+            </div>
+            <h1>24/7 Emergency Response</h1>
+            <p class="tagline">Providing expert make-safes, strip-outs, and restorations with nationwide coverage across NSW, QLD, and VIC.</p>
+            <div class="cta-buttons">
+                <a href="tel:0451254693" class="btn btn-primary">
+                    <span class="phone-icon">📞</span> Call 0451 254 693
+                </a>
+                <a href="#services" class="btn btn-secondary">Our Services</a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number counter" data-target="24">24</div>
+                    <div class="stat-label">Hour Service</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number counter" data-target="3">3</div>
+                    <div class="stat-label">States Coverage</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number counter" data-target="100">100</div>
+                    <div class="stat-label">% Insured</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">1-3hr</div>
+                    <div class="stat-label">Response Time</div>
+                </div>
+            </div>
+        </div>
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <h2 style="text-align: center; color: var(--gold); margin-bottom: 1rem; font-size: 3rem;">Our Emergency Services</h2>
+        <p style="text-align: center; color: var(--text-light); margin-bottom: 3rem; font-size: 1.2rem;">
+            Expert Make-Safes • Strip-Outs • Restorations<br>
+            <span style="color: var(--gold);">Serving NSW, QLD & VIC</span>
+        </p>
+        <div class="services-grid">
+            <div class="service-card premium-card">
+                <div class="service-icon">🌪️</div>
+                <h3>Storm Damage Response</h3>
+                <p>Emergency roof tarping, temporary waterproofing, fallen tree clearance, and debris removal. Available 24/7 for immediate response.</p>
+                <div class="service-badge">24/7 Available</div>
+            </div>
+            <div class="service-card premium-card">
+                <div class="service-icon">🔥</div>
+                <h3>Fire & Smoke Damage</h3>
+                <p>Securing unsafe areas, boarding up openings, structural assessments, and power isolation for fire-affected properties.</p>
+                <div class="service-badge">Rapid Response</div>
+            </div>
+            <div class="service-card premium-card">
+                <div class="service-icon">🚗</div>
+                <h3>Impact Damage</h3>
+                <p>Structural propping, safety barricading, vehicle strike response, and comprehensive damage documentation.</p>
+                <div class="service-badge">Insurance Approved</div>
+            </div>
+            <div class="service-card premium-card">
+                <div class="service-icon">💧</div>
+                <h3>Flood & Water Ingress</h3>
+                <p>Pump-outs, water extraction, drying equipment setup, and electrical isolation for water-damaged properties.</p>
+                <div class="service-badge">Emergency Team</div>
+            </div>
+            <div class="service-card premium-card">
+                <div class="service-icon">🗂️</div>
+                <h3>Strip-Outs & Make-Safes</h3>
+                <p>Complete strip-out services, property securing, hazard removal, and site preparation for restoration works.</p>
+                <div class="service-badge">Specialist Team</div>
+            </div>
+            <div class="service-card premium-card">
+                <div class="service-icon">📋</div>
+                <h3>Insurance Coordination</h3>
+                <p>Direct billing to insurers, detailed documentation, and expert assessment reports for claims.</p>
+                <div class="service-badge">Direct Billing</div>
+            </div>
+        </div>
+        
+        <div style="text-align: center; margin-top: 3rem;">
+            <p style="color: var(--gold); font-size: 1.3rem; margin-bottom: 1rem;">Need Emergency Assistance?</p>
+            <a href="tel:0451254693" class="btn btn-primary" style="font-size: 1.2rem; padding: 1.2rem 3rem;">
+                Call Emergency Admin Team Now
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="about-content">
+            <div class="about-text">
+                <h2>About DreamCraft Projects</h2>
+                <div class="highlight-box">
+                    <h3 style="color: var(--gold); margin-bottom: 1rem;">EMERGENCY ADMIN TEAM</h3>
+                    <p>Providing expert make-safes, strip-outs, and restorations with nationwide coverage across NSW, QLD, and VIC.</p>
+                </div>
+                <p style="margin: 1.5rem 0;">DreamCraft Projects Pty Ltd is a fully licensed and comprehensively insured contractor delivering expert emergency response and make-safe services throughout Australia.</p>
+                <p style="margin-bottom: 1.5rem;">We are trusted by insurers, assessors, loss adjusters, and property owners to deliver fast, professional, and compliant responses when it matters most. Our teams are strategically positioned across three states to ensure rapid response times.</p>
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div>Availability</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3</div>
+                        <div>States</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div>Licensed</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">Expert</div>
+                        <div>Teams</div>
+                    </div>
+                </div>
+            </div>
+            <div class="about-features">
+                <h3 style="color: var(--gold); margin-bottom: 2rem;">Why Industry Leaders Choose Us</h3>
+                <ul class="feature-list">
+                    <li><span class="check-icon">✓</span> Master Builders NSW Member</li>
+                    <li><span class="check-icon">✓</span> Nationwide Coverage: NSW, QLD, VIC</li>
+                    <li><span class="check-icon">✓</span> ABN: 28684036888</li>
+                    <li><span class="check-icon">✓</span> Fully Insured & WHS Compliant</li>
+                    <li><span class="check-icon">✓</span> Safe Work Method Statements (SWMS)</li>
+                    <li><span class="check-icon">✓</span> Real-time Admin Support</li>
+                    <li><span class="check-icon">✓</span> Photo-documented Reports</li>
+                    <li><span class="check-icon">✓</span> Direct Insurance Billing</li>
+                    <li><span class="check-icon">✓</span> Strip-outs & Make-safes Specialist</li>
+                    <li><span class="check-icon">✓</span> 1-3 Hour Emergency Response</li>
+                </ul>
+                <div class="cta-box">
+                    <p style="font-weight: bold; margin-bottom: 1rem;">Need Immediate Assistance?</p>
+                    <a href="tel:0451254693" class="btn btn-primary" style="width: 100%;">Call Emergency Admin Team</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery">
+        <h2 style="text-align: center; color: var(--gold); margin-bottom: 2rem; font-size: 2.5rem;">Our Work Gallery</h2>
+        <div class="gallery-grid">
+            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Emergency+Response') center/cover;">
+                <div class="gallery-overlay">
+                    <h4 style="color: var(--gold);">Emergency Response</h4>
+                    <p>Professional make-safe and restoration work</p>
+                </div>
+            </div>
+            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Storm+Damage') center/cover;">
+                <div class="gallery-overlay">
+                    <h4 style="color: var(--gold);">Storm Damage</h4>
+                    <p>Rapid response to severe weather events</p>
+                </div>
+            </div>
+            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Structural+Repair') center/cover;">
+                <div class="gallery-overlay">
+                    <h4 style="color: var(--gold);">Structural Repair</h4>
+                    <p>Expert assessment and restoration services</p>
+                </div>
+            </div>
+            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Roof+Restoration') center/cover;">
+                <div class="gallery-overlay">
+                    <h4 style="color: var(--gold);">Roof Restoration</h4>
+                    <p>Complete roofing solutions for all damage types</p>
+                </div>
+            </div>
+            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Property+Protection') center/cover;">
+                <div class="gallery-overlay">
+                    <h4 style="color: var(--gold);">Property Protection</h4>
+                    <p>Securing and stabilizing damaged structures</p>
+                </div>
+            </div>
+            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Insurance+Work') center/cover;">
+                <div class="gallery-overlay">
+                    <h4 style="color: var(--gold);">Insurance Work</h4>
+                    <p>Trusted by major insurers for quality repairs</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 style="text-align: center; color: var(--gold); margin-bottom: 1rem; font-size: 3rem;">Contact Emergency Admin Team</h2>
+        <p style="text-align: center; color: var(--text-light); margin-bottom: 3rem; font-size: 1.2rem;">
+            24/7 Emergency Response • Nationwide Coverage • Direct Insurance Billing
+        </p>
+        <div class="coverage-map">
+            <div class="state-badge">NSW</div>
+            <div class="state-badge">QLD</div>
+            <div class="state-badge">VIC</div>
+        </div>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3 style="color: var(--gold); margin-bottom: 2rem; font-size: 1.5rem;">Get In Touch - 24/7</h3>
+                <div class="contact-item">
+                    <span class="contact-icon">📞</span>
+                    <div>
+                        <strong>24/7 Emergency Admin Team:</strong><br>
+                        <span style="font-size: 1.3rem; color: var(--gold);">0451 254 693</span><br>
+                        0405 785 052
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">✉️</span>
+                    <div>
+                        <strong>Email:</strong><br>
+                        admin@dreamcraftprojects.net<br>
+                        anas@dreamcraftprojects.net
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">🏢</span>
+                    <div>
+                        <strong>ABN:</strong><br>
+                        28684036888
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">📍</span>
+                    <div>
+                        <strong>Service Areas:</strong><br>
+                        NSW • QLD • VIC<br>
+                        <span style="font-size: 0.9rem; color: rgba(255, 215, 0, 0.8);">
+                            Make-safes • Strip-outs • Restorations
+                        </span>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-icon">⏰</span>
+                    <div>
+                        <strong>Response Time:</strong><br>
+                        <span style="color: var(--gold);">1-3 hours dispatch ready</span>
+                    </div>
+                </div>
+                <div style="background: rgba(255, 215, 0, 0.1); padding: 1.5rem; border-radius: 15px; margin-top: 2rem; border: 1px solid var(--gold);">
+                    <p style="color: var(--gold); font-weight: bold; margin-bottom: 0.5rem;">BOOK NOW</p>
+                    <p style="font-size: 0.9rem;">Direct insurance billing available</p>
+                </div>
+            </div>
+            <form id="contactForm">
+                <div class="form-group">
+                    <label for="name">Your Name *</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email Address *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number *</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <div class="form-group">
+                    <label for="state">State *</label>
+                    <select id="state" name="state" required>
+                        <option value="">Select State</option>
+                        <option value="NSW">New South Wales</option>
+                        <option value="QLD">Queensland</option>
+                        <option value="VIC">Victoria</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="service">Service Required *</label>
+                    <select id="service" name="service" required>
+                        <option value="">Select a service</option>
+                        <option value="storm">Storm Damage</option>
+                        <option value="fire">Fire & Smoke</option>
+                        <option value="flood">Flood/Water</option>
+                        <option value="impact">Impact Damage</option>
+                        <option value="stripout">Strip-Out</option>
+                        <option value="makesafe">Make-Safe</option>
+                        <option value="restoration">Restoration</option>
+                        <option value="other">Other Emergency</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="insurance">Insurance Claim?</label>
+                    <select id="insurance" name="insurance">
+                        <option value="yes">Yes - Insurance Claim</option>
+                        <option value="no">No - Private</option>
+                        <option value="pending">Pending Approval</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message">Describe Your Emergency *</label>
+                    <textarea id="message" name="message" rows="5" required placeholder="Please describe the damage and urgent requirements..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; font-size: 1.1rem; padding: 1rem;">
+                    Submit Emergency Request
+                </button>
+                <p style="text-align: center; margin-top: 1rem; font-size: 0.9rem; color: rgba(255, 215, 0, 0.8);">
+                    For immediate assistance, call <strong>0451 254 693</strong>
+                </p>
+            </form>
+        </div>
+    </section>
+
+    <!-- Policy Section -->
+    <section id="policy">
+        <h2 style="text-align: center; color: var(--gold); margin-bottom: 2rem; font-size: 2.5rem;">Our Code of Conduct</h2>
+        <div class="policy-content">
+            <p style="margin-bottom: 2rem;">DreamCraft Projects is committed to upholding the highest standards of ethical and lawful business conduct. We recognise our responsibility to foster fair, safe, and inclusive workplaces while contributing positively to the broader community.</p>
+            
+            <h3 style="color: var(--gold); margin-bottom: 1rem;">Our Commitments:</h3>
+            
+            <div class="policy-item">
+                <strong>Legal Compliance:</strong> Adherence to all applicable Commonwealth and NSW legislation, including Fair Work Act 2009, Work Health and Safety Act 2011 (NSW), Modern Slavery Act 2018.
+            </div>
+            
+            <div class="policy-item">
+                <strong>Anti-Slavery and Ethical Labour:</strong> We strictly oppose modern slavery, forced labour, and human trafficking. All work must be performed voluntarily with fair compensation.
+            </div>
+            
+            <div class="policy-item">
+                <strong>Fair Treatment:</strong> Promoting a work environment free from discrimination, harassment, bullying, or victimisation. All workers treated with dignity and respect.
+            </div>
+            
+            <div class="policy-item">
+                <strong>Safe Workplaces:</strong> Ensuring all worksites are safe, clean, and meet or exceed WHS standards. Risk management and training are mandatory.
+            </div>
+            
+            <div class="policy-item">
+                <strong>Integrity:</strong> Acting honestly and transparently. Avoiding conflicts of interest, bribery, or corruption.
+            </div>
+            
+            <div class="policy-item">
+                <strong>Environmental Stewardship:</strong> Operating with care for the environment in line with our Environmental Policy and NSW environmental laws.
+            </div>
+            
+            <div class="policy-item">
+                <strong>Continuous Improvement:</strong> Regularly reviewing performance, encouraging feedback, and committing to continuous development.
+            </div>
+            
+            <p style="margin-top: 2rem; text-align: right; color: var(--gold);">
+                <strong>Anas Alqaisi</strong><br>
+                Managing Director
+            </p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div style="margin-bottom: 2rem;">
+            <img src="https://i.imgur.com/5259E7H.png" alt="DreamCraft Projects" style="height: 150px; width: auto; margin: 0 auto; display: block; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));" onerror="this.style.display='none'">
+        </div>
+        <p style="font-size: 1.2rem; color: var(--gold); margin-bottom: 1rem;">ABN: 28684036888</p>
+        <p>&copy; 2025 DreamCraft Projects Pty Ltd. All Rights Reserved.</p>
+        <p>Fully Licensed & Insured Contractor | Master Builders NSW Member</p>
+        <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--gold);">
+            <p style="color: var(--gold); font-size: 1.3rem; font-weight: bold;">24/7 EMERGENCY ADMIN TEAM</p>
+            <p style="margin-top: 0.5rem;">📞 0451 254 693 | ✉️ admin@dreamcraftprojects.net</p>
+            <p style="margin-top: 1rem; color: var(--text-light);">Nationwide Coverage: NSW • QLD • VIC</p>
+        </div>
+    </footer>
+
+    <script>
+        // Page loader
+        window.addEventListener('load', function() {
+            setTimeout(function() {
+                const loader = document.getElementById('loader');
+                if (loader) {
+                    loader.style.display = 'none';
+                }
+            }, 1000);
+        });
+
+        // Mobile menu functionality
+        const menuToggle = document.getElementById('menuToggle');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+        const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
+
+        if (menuToggle && mobileMenu && mobileMenuOverlay) {
+            menuToggle.addEventListener('click', function() {
+                menuToggle.classList.toggle('active');
+                mobileMenu.classList.toggle('active');
+                mobileMenuOverlay.classList.toggle('active');
+            });
+
+            mobileMenuOverlay.addEventListener('click', function() {
+                menuToggle.classList.remove('active');
+                mobileMenu.classList.remove('active');
+                mobileMenuOverlay.classList.remove('active');
+            });
+
+            mobileNavLinks.forEach(link => {
+                link.addEventListener('click', function() {
+                    menuToggle.classList.remove('active');
+                    mobileMenu.classList.remove('active');
+                    mobileMenuOverlay.classList.remove('active');
+                });
+            });
+        }
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Particle animation
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            if (!particlesContainer) return;
+            
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 5 + 2 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
+                particlesContainer.appendChild(particle);
+            
