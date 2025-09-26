@@ -1,4 +1,31 @@
-<!DOCTYPE html>
+      /* Premium Service Cards */
+        .premium-card {
+            position: relative;
+            overflow: visible;
+        }
+
+        .service-badge {
+            position: absolute;
+            top: -10px;
+            right: 20px;
+            background: var(--gold);
+            color: var(--dark-grey);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(255, 215, 0, 0.3);
+        }
+
+        @keyframes borderRotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Counter Animation for Stats */
+        .counter {
+            display: inline-block;
+        }<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -563,24 +590,6 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
 
-        /* Premium Service Cards */
-        .premium-card {
-            position: relative;
-            overflow: visible;
-        }
-
-        .service-badge {
-            position: absolute;
-            top: -10px;
-            right: 20px;
-            background: var(--gold);
-            color: var(--dark-grey);
-            padding: 5px 15px;
-            border-radius: 15px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-
         .service-card::before {
             content: '';
             position: absolute;
@@ -700,6 +709,40 @@
             border: 1px solid rgba(255, 215, 0, 0.2);
         }
 
+        /* Unique Floating Elements */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border: 2px solid rgba(255, 215, 0, 0.1);
+            border-radius: 50%;
+            animation: float-random 20s infinite;
+        }
+
+        @keyframes float-random {
+            0%, 100% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(100px, -100px) rotate(90deg);
+            }
+            50% {
+                transform: translate(-100px, 100px) rotate(180deg);
+            }
+            75% {
+                transform: translate(-50px, -50px) rotate(270deg);
+            }
+        }
+
         /* Gallery */
         .gallery-grid {
             display: grid;
@@ -789,7 +832,7 @@
             color: var(--gold);
         }
 
-        input, textarea, select {
+        input, textarea {
             padding: 0.8rem;
             background: var(--medium-grey);
             border: 1px solid var(--light-grey);
@@ -798,7 +841,7 @@
             transition: border-color 0.3s;
         }
 
-        input:focus, textarea:focus, select:focus {
+        input:focus, textarea:focus {
             outline: none;
             border-color: var(--gold);
         }
@@ -827,58 +870,6 @@
             font-weight: bold;
         }
 
-        /* New Builds Section */
-        .new-builds-section {
-            margin-top: 5rem; 
-            padding: 3rem; 
-            background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(30, 30, 30, 0.9)); 
-            border-radius: 30px; 
-            border: 2px solid var(--gold);
-        }
-
-        .slideshow-container {
-            width: 100%; 
-            height: 100%; 
-            position: relative;
-        }
-
-        .slide {
-            position: absolute; 
-            width: 100%; 
-            height: 100%; 
-            display: flex; 
-            align-items: flex-end;
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-        }
-
-        .slide.active {
-            display: flex;
-        }
-
-        .coverage-map {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .state-badge {
-            background: var(--gold);
-            color: var(--dark-grey);
-            padding: 1rem 2rem;
-            border-radius: 25px;
-            font-weight: bold;
-            font-size: 1.1rem;
-            transition: all 0.3s;
-        }
-
-        .state-badge:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 25px rgba(255, 215, 0, 0.3);
-        }
-
         /* Footer */
         footer {
             background: var(--medium-grey);
@@ -892,17 +883,6 @@
             from {
                 opacity: 0;
                 transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
             }
             to {
                 opacity: 1;
@@ -1043,7 +1023,6 @@
 
             .coverage-map {
                 gap: 1rem;
-                flex-wrap: wrap;
             }
 
             .state-badge {
@@ -1063,6 +1042,16 @@
                 bottom: 20px;
             }
 
+            /* Fix floating shapes on mobile */
+            .floating-shapes {
+                display: none;
+            }
+
+            /* Adjust form elements */
+            input, textarea, select {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+
             .contact-info {
                 padding: 2rem 1.5rem;
             }
@@ -1071,6 +1060,7 @@
                 margin-bottom: 1rem;
             }
 
+            /* Stats grid adjustment */
             .stats {
                 grid-template-columns: 1fr 1fr;
                 gap: 1rem;
@@ -1080,6 +1070,7 @@
                 padding: 1rem;
             }
 
+            /* Feature list adjustments */
             .feature-list li {
                 padding: 0.6rem 0;
                 font-size: 0.95rem;
@@ -1092,15 +1083,6 @@
 
             .cta-box {
                 padding: 1.5rem 1rem;
-            }
-
-            .new-builds-section {
-                margin-top: 3rem;
-                padding: 2rem 1rem;
-            }
-
-            .video-showcase {
-                height: 300px !important;
             }
         }
 
@@ -1177,13 +1159,10 @@
                 height: 80px !important;
             }
 
+            /* Ensure proper text wrapping */
             p {
                 word-wrap: break-word;
                 overflow-wrap: break-word;
-            }
-
-            .video-showcase {
-                height: 250px !important;
             }
         }
 
@@ -1203,7 +1182,7 @@
     <div class="animated-bg"></div>
     <div class="bg-particles" id="particles"></div>
     
-    <!-- Loading Animation -->
+    <!-- Unique Loading Animation -->
     <div id="loader" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: var(--dark-grey); z-index: 9999; display: flex; align-items: center; justify-content: center;">
         <div style="text-align: center;">
             <div style="width: 80px; height: 80px; border: 3px solid rgba(255, 215, 0, 0.3); border-top: 3px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto;"></div>
@@ -1227,7 +1206,7 @@
                 <span></span>
             </div>
             <a href="#home" class="logo">
-                <img src="https://i.imgur.com/5259E7H.png" alt="DreamCraft Projects" class="logo-img" onerror="this.style.display='none'">
+                <img src="https://i.imgur.com/5259E7H.png" alt="DreamCraft Projects" class="logo-img">
                 <div class="logo-text">
                     <span class="company-name">DreamCraft Projects</span>
                     <span class="tagline-small">YOUR DREAMS - OUR CRAFT</span>
@@ -1336,7 +1315,7 @@
                 <div class="service-badge">Emergency Team</div>
             </div>
             <div class="service-card premium-card">
-                <div class="service-icon">🗂️</div>
+                <div class="service-icon">🏗️</div>
                 <h3>Strip-Outs & Make-Safes</h3>
                 <p>Complete strip-out services, property securing, hazard removal, and site preparation for restoration works.</p>
                 <div class="service-badge">Specialist Team</div>
@@ -1346,6 +1325,175 @@
                 <h3>Insurance Coordination</h3>
                 <p>Direct billing to insurers, detailed documentation, and expert assessment reports for claims.</p>
                 <div class="service-badge">Direct Billing</div>
+            </div>
+        </div>
+        
+        <!-- New Builds Section -->
+        <div class="new-builds-section" style="margin-top: 5rem; padding: 3rem; background: linear-gradient(135deg, rgba(45, 45, 45, 0.9), rgba(30, 30, 30, 0.9)); border-radius: 30px; border: 2px solid var(--gold);">
+            <h2 style="text-align: center; color: var(--gold); margin-bottom: 2rem; font-size: 2.5rem;">
+                🏗️ New Construction & Builds
+            </h2>
+            
+            <div class="video-showcase" style="position: relative; width: 100%; height: 500px; background: #000; border-radius: 20px; overflow: hidden; margin-bottom: 3rem; box-shadow: 0 20px 60px rgba(0,0,0,0.5);">
+                <!-- Premium Interior Slideshow with Real Images -->
+                <div class="slideshow-container" style="width: 100%; height: 100%; position: relative;">
+                    <!-- Slide 1 -->
+                    <div class="slide fade-slide active" style="position: absolute; width: 100%; height: 100%; background: url('https://i.imgur.com/pnwsMpX.jpg') center/cover no-repeat; display: flex; align-items: flex-end;">
+                        <div style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); width: 100%; padding: 2rem; color: white;">
+                            <h3 style="color: var(--gold); font-size: 2rem;">Premium Construction</h3>
+                            <p>Quality craftsmanship • Modern design • Expert builders</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2 -->
+                    <div class="slide fade-slide" style="position: absolute; width: 100%; height: 100%; background: url('https://i.imgur.com/fsIAOX3.jpg') center/cover no-repeat; display: none; align-items: flex-end;">
+                        <div style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); width: 100%; padding: 2rem; color: white;">
+                            <h3 style="color: var(--gold); font-size: 2rem;">Luxury Interiors</h3>
+                            <p>Custom finishes • Designer selections • Premium materials</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 3 -->
+                    <div class="slide fade-slide" style="position: absolute; width: 100%; height: 100%; background: url('https://i.imgur.com/oSlObPW.jpg') center/cover no-repeat; display: none; align-items: flex-end;">
+                        <div style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); width: 100%; padding: 2rem; color: white;">
+                            <h3 style="color: var(--gold); font-size: 2rem;">Modern Architecture</h3>
+                            <p>Contemporary design • Sustainable building • Energy efficient</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 4 -->
+                    <div class="slide fade-slide" style="position: absolute; width: 100%; height: 100%; background: url('https://i.imgur.com/YNkJjOG.jpg') center/cover no-repeat; display: none; align-items: flex-end;">
+                        <div style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); width: 100%; padding: 2rem; color: white;">
+                            <h3 style="color: var(--gold); font-size: 2rem;">Residential Excellence</h3>
+                            <p>Family homes • Townhouses • Luxury estates</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 5 -->
+                    <div class="slide fade-slide" style="position: absolute; width: 100%; height: 100%; background: url('https://i.imgur.com/Hy7J2H3.jpg') center/cover no-repeat; display: none; align-items: flex-end;">
+                        <div style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); width: 100%; padding: 2rem; color: white;">
+                            <h3 style="color: var(--gold); font-size: 2rem;">Quality Assurance</h3>
+                            <p>Licensed builders • Insured work • Guaranteed quality</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 6 - Repeat for additional content -->
+                    <div class="slide fade-slide" style="position: absolute; width: 100%; height: 100%; background: url('https://i.imgur.com/oSlObPW.jpg') center/cover no-repeat; display: none; align-items: flex-end;">
+                        <div style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); width: 100%; padding: 2rem; color: white;">
+                            <h3 style="color: var(--gold); font-size: 2rem;">Commercial Projects</h3>
+                            <p>Office spaces • Retail fit-outs • Industrial buildings</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 7 - Additional content -->
+                    <div class="slide fade-slide" style="position: absolute; width: 100%; height: 100%; background: url('https://i.imgur.com/YNkJjOG.jpg') center/cover no-repeat; display: none; align-items: flex-end;">
+                        <div style="background: linear-gradient(to top, rgba(0,0,0,0.8), transparent); width: 100%; padding: 2rem; color: white;">
+                            <h3 style="color: var(--gold); font-size: 2rem;">Complete Solutions</h3>
+                            <p>Design to build • Project management • On-time delivery</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Branded End Slide -->
+                    <div class="slide fade-slide" style="position: absolute; width: 100%; height: 100%; background: linear-gradient(135deg, var(--dark-grey), #1a1a1a); display: none; align-items: center; justify-content: center;">
+                        <div style="text-align: center;">
+                            <img src="https://i.imgur.com/5259E7H.png" alt="DreamCraft Projects" style="height: 120px; margin-bottom: 2rem;">
+                            <h3 style="color: var(--gold); font-size: 2.5rem; margin-bottom: 1rem;">Building Excellence</h3>
+                            <p style="color: white; font-size: 1.2rem; margin-bottom: 2rem;">From Emergency Response to New Builds</p>
+                            <div style="display: flex; justify-content: center; gap: 2rem;">
+                                <div>
+                                    <div style="color: var(--gold); font-size: 2rem; font-weight: bold;">500+</div>
+                                    <div style="color: white;">Projects</div>
+                                </div>
+                                <div>
+                                    <div style="color: var(--gold); font-size: 2rem; font-weight: bold;">24/7</div>
+                                    <div style="color: white;">Service</div>
+                                </div>
+                                <div>
+                                    <div style="color: var(--gold); font-size: 2rem; font-weight: bold;">3</div>
+                                    <div style="color: white;">States</div>
+                                </div>
+                            </div>
+                            <a href="#contact" class="btn btn-primary" style="margin-top: 2rem;">Start Your Project</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Progress Bar -->
+                <div style="position: absolute; bottom: 0; left: 0; width: 100%; height: 3px; background: rgba(255,255,255,0.2);">
+                    <div id="progress-bar" style="height: 100%; background: var(--gold); width: 0; transition: width 2s linear;"></div>
+                </div>
+                
+                <!-- Slide Counter -->
+                <div style="position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 20px; color: white; font-size: 0.9rem;">
+                    <span id="slide-number">1</span> / 8
+                </div>
+                
+                <!-- Play/Pause Button -->
+                <div style="position: absolute; top: 20px; left: 20px; background: rgba(0,0,0,0.7); padding: 8px 15px; border-radius: 20px; color: white; font-size: 1.2rem; cursor: pointer;" onclick="togglePlayPause()" id="play-pause-btn">⏸</div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 3rem; margin-top: 3rem;">
+                <div class="build-feature">
+                    <h3 style="color: var(--gold); margin-bottom: 1rem;">Residential Construction</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.8rem;">✓ Custom home builds</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Multi-unit developments</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Granny flats & extensions</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Luxury home construction</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Sustainable building practices</li>
+                    </ul>
+                </div>
+                
+                <div class="build-feature">
+                    <h3 style="color: var(--gold); margin-bottom: 1rem;">Commercial Projects</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.8rem;">✓ Office buildings</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Retail spaces</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Warehouse construction</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Industrial facilities</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Mixed-use developments</li>
+                    </ul>
+                </div>
+                
+                <div class="build-feature">
+                    <h3 style="color: var(--gold); margin-bottom: 1rem;">Our Process</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.8rem;">✓ Initial consultation & design</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Council approvals & permits</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Project management</li>
+                        <li style="margin-bottom: 0.8rem;">✓ Quality construction</li>
+                        <li style="margin-bottom: 0.8rem;">✓ On-time completion</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="background: rgba(255, 215, 0, 0.1); padding: 2rem; border-radius: 15px; margin-top: 3rem; text-align: center;">
+                <h3 style="color: var(--gold); margin-bottom: 1rem;">Why Choose DreamCraft for New Builds?</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-top: 2rem;">
+                    <div>
+                        <div style="font-size: 2rem; color: var(--gold); font-weight: bold;">15+</div>
+                        <p>Years Experience</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; color: var(--gold); font-weight: bold;">100%</div>
+                        <p>Licensed & Insured</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; color: var(--gold); font-weight: bold;">500+</div>
+                        <p>Projects Completed</p>
+                    </div>
+                    <div>
+                        <div style="font-size: 2rem; color: var(--gold); font-weight: bold;">24/7</div>
+                        <p>Support Available</p>
+                    </div>
+                </div>
+                <p style="margin-top: 2rem; font-size: 1.1rem;">
+                    From emergency repairs to complete new builds, DreamCraft Projects delivers excellence across all construction services. 
+                    Our integrated approach means your new build is protected by our 24/7 emergency response team from day one.
+                </p>
+                <a href="#contact" class="btn btn-primary" style="margin-top: 2rem; font-size: 1.1rem; padding: 1rem 2rem;">
+                    Start Your New Build Project
+                </a>
             </div>
         </div>
         
@@ -1413,37 +1561,37 @@
     <section id="gallery">
         <h2 style="text-align: center; color: var(--gold); margin-bottom: 2rem; font-size: 2.5rem;">Our Work Gallery</h2>
         <div class="gallery-grid">
-            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Emergency+Response') center/cover;">
+            <div class="gallery-item" style="background: url('https://i.imgur.com/exDaOSl.jpg') center/cover;">
                 <div class="gallery-overlay">
                     <h4 style="color: var(--gold);">Emergency Response</h4>
                     <p>Professional make-safe and restoration work</p>
                 </div>
             </div>
-            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Storm+Damage') center/cover;">
+            <div class="gallery-item" style="background: url('https://i.imgur.com/Ue8UlWa.jpg') center/cover;">
                 <div class="gallery-overlay">
                     <h4 style="color: var(--gold);">Storm Damage</h4>
                     <p>Rapid response to severe weather events</p>
                 </div>
             </div>
-            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Structural+Repair') center/cover;">
+            <div class="gallery-item" style="background: url('https://i.imgur.com/N9SrhoB.jpg') center/cover;">
                 <div class="gallery-overlay">
                     <h4 style="color: var(--gold);">Structural Repair</h4>
                     <p>Expert assessment and restoration services</p>
                 </div>
             </div>
-            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Roof+Restoration') center/cover;">
+            <div class="gallery-item" style="background: url('https://i.imgur.com/GKrNEHv.jpg') center/cover;">
                 <div class="gallery-overlay">
                     <h4 style="color: var(--gold);">Roof Restoration</h4>
                     <p>Complete roofing solutions for all damage types</p>
                 </div>
             </div>
-            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Property+Protection') center/cover;">
+            <div class="gallery-item" style="background: url('https://i.imgur.com/xtXOkLZ.jpg') center/cover;">
                 <div class="gallery-overlay">
                     <h4 style="color: var(--gold);">Property Protection</h4>
                     <p>Securing and stabilizing damaged structures</p>
                 </div>
             </div>
-            <div class="gallery-item" style="background: url('https://via.placeholder.com/400x300/2d2d2d/FFD700?text=Insurance+Work') center/cover;">
+            <div class="gallery-item" style="background: url('https://i.imgur.com/qUY0g2D.jpg') center/cover;">
                 <div class="gallery-overlay">
                     <h4 style="color: var(--gold);">Insurance Work</h4>
                     <p>Trusted by major insurers for quality repairs</p>
@@ -1526,7 +1674,7 @@
                 </div>
                 <div class="form-group">
                     <label for="state">State *</label>
-                    <select id="state" name="state" required>
+                    <select id="state" name="state" style="padding: 0.8rem; background: var(--medium-grey); border: 1px solid var(--light-grey); border-radius: 8px; color: var(--text-light);" required>
                         <option value="">Select State</option>
                         <option value="NSW">New South Wales</option>
                         <option value="QLD">Queensland</option>
@@ -1535,7 +1683,7 @@
                 </div>
                 <div class="form-group">
                     <label for="service">Service Required *</label>
-                    <select id="service" name="service" required>
+                    <select id="service" name="service" style="padding: 0.8rem; background: var(--medium-grey); border: 1px solid var(--light-grey); border-radius: 8px; color: var(--text-light);" required>
                         <option value="">Select a service</option>
                         <option value="storm">Storm Damage</option>
                         <option value="fire">Fire & Smoke</option>
@@ -1549,7 +1697,7 @@
                 </div>
                 <div class="form-group">
                     <label for="insurance">Insurance Claim?</label>
-                    <select id="insurance" name="insurance">
+                    <select id="insurance" name="insurance" style="padding: 0.8rem; background: var(--medium-grey); border: 1px solid var(--light-grey); border-radius: 8px; color: var(--text-light);">
                         <option value="yes">Yes - Insurance Claim</option>
                         <option value="no">No - Private</option>
                         <option value="pending">Pending Approval</option>
@@ -1615,7 +1763,7 @@
     <!-- Footer -->
     <footer>
         <div style="margin-bottom: 2rem;">
-            <img src="https://i.imgur.com/5259E7H.png" alt="DreamCraft Projects" style="height: 150px; width: auto; margin: 0 auto; display: block; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));" onerror="this.style.display='none'">
+            <img src="https://i.imgur.com/5259E7H.png" alt="DreamCraft Projects" style="height: 150px; width: auto; margin: 0 auto; display: block; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));">
         </div>
         <p style="font-size: 1.2rem; color: var(--gold); margin-bottom: 1rem;">ABN: 28684036888</p>
         <p>&copy; 2025 DreamCraft Projects Pty Ltd. All Rights Reserved.</p>
@@ -1627,16 +1775,19 @@
         </div>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
         // Page loader
         window.addEventListener('load', function() {
             setTimeout(function() {
-                const loader = document.getElementById('loader');
-                if (loader) {
-                    loader.style.display = 'none';
-                }
+                document.getElementById('loader').style.display = 'none';
             }, 1000);
         });
+
+        // Initialize EmailJS
+        (function() {
+            emailjs.init("0WaQPUf6_O9fqdzx1");
+        })();
 
         // Mobile menu functionality
         const menuToggle = document.getElementById('menuToggle');
@@ -1644,27 +1795,25 @@
         const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
         const mobileNavLinks = document.querySelectorAll('.mobile-nav-links a');
 
-        if (menuToggle && mobileMenu && mobileMenuOverlay) {
-            menuToggle.addEventListener('click', function() {
-                menuToggle.classList.toggle('active');
-                mobileMenu.classList.toggle('active');
-                mobileMenuOverlay.classList.toggle('active');
-            });
+        menuToggle.addEventListener('click', function() {
+            menuToggle.classList.toggle('active');
+            mobileMenu.classList.toggle('active');
+            mobileMenuOverlay.classList.toggle('active');
+        });
 
-            mobileMenuOverlay.addEventListener('click', function() {
+        mobileMenuOverlay.addEventListener('click', function() {
+            menuToggle.classList.remove('active');
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+        });
+
+        mobileNavLinks.forEach(link => {
+            link.addEventListener('click', function() {
                 menuToggle.classList.remove('active');
                 mobileMenu.classList.remove('active');
                 mobileMenuOverlay.classList.remove('active');
             });
-
-            mobileNavLinks.forEach(link => {
-                link.addEventListener('click', function() {
-                    menuToggle.classList.remove('active');
-                    mobileMenu.classList.remove('active');
-                    mobileMenuOverlay.classList.remove('active');
-                });
-            });
-        }
+        });
 
         // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -1683,8 +1832,6 @@
         // Particle animation
         function createParticles() {
             const particlesContainer = document.getElementById('particles');
-            if (!particlesContainer) return;
-            
             for (let i = 0; i < 30; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'particle';
@@ -1695,4 +1842,253 @@
                 particle.style.animationDelay = Math.random() * 20 + 's';
                 particle.style.animationDuration = (Math.random() * 20 + 20) + 's';
                 particlesContainer.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Contact form submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const templateParams = {
+                from_name: document.getElementById('name').value,
+                from_email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                service: document.getElementById('service').value,
+                message: document.getElementById('message').value,
+                to_email: 'admin@dreamcraftprojects.net'
+            };
+
+            emailjs.send('Admin@dreamcraftprojects', 'template_cas1s3i', templateParams)
+                .then(function(response) {
+                    alert('Thank you for your message! We will respond within 1 hour.');
+                    document.getElementById('contactForm').reset();
+                }, function(error) {
+                    alert('There was an error sending your message. Please call us directly at 0451 254 693');
+                    console.error('EmailJS error:', error);
+                });
+        });
+
+        // Slideshow functionality
+        let slideIndex = 1;
+        let slideInterval;
+        let isPlaying = true;
+        
+        function startSlideshow() {
+            showSlides(slideIndex);
+            // Auto advance slides every 2 seconds
+            slideInterval = setInterval(function() {
+                if (isPlaying) {
+                    plusSlides(1);
+                }
+            }, 2000);
+        }
+
+        function togglePlayPause() {
+            isPlaying = !isPlaying;
+            const btn = document.getElementById('play-pause-btn');
+            if (btn) {
+                btn.textContent = isPlaying ? '⏸' : '▶';
+            }
+        }
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+            resetInterval();
+        }
+
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+            resetInterval();
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            slideInterval = setInterval(function() {
+                if (isPlaying) {
+                    plusSlides(1);
+                }
+            }, 2000);
+        }
+
+        function showSlides(n) {
+            let slides = document.getElementsByClassName("slide");
+            let progressBar = document.getElementById("progress-bar");
+            let slideNumber = document.getElementById("slide-number");
+            
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+                slides[i].classList.remove("active");
+            }
+            
+            if (slides[slideIndex-1]) {
+                slides[slideIndex-1].style.display = "flex";
+                slides[slideIndex-1].classList.add("active");
+            }
+            
+            if (progressBar) {
+                progressBar.style.transition = 'none';
+                progressBar.style.width = "0";
+                setTimeout(() => {
+                    progressBar.style.transition = 'width 2s linear';
+                    progressBar.style.width = "100%";
+                }, 50);
+            }
+            
+            if (slideNumber) {
+                slideNumber.textContent = slideIndex;
+            }
+        }
+
+        // Start slideshow when page loads
+        window.addEventListener('load', function() {
+            startSlideshow();
+        });
+
+        // Make functions global
+        window.plusSlides = plusSlides;
+        window.currentSlide = currentSlide;
+        window.togglePlayPause = togglePlayPause;
+        const counters = document.querySelectorAll('.counter');
+        const speed = 200;
+
+        const runCounter = (counter) => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+                
+                if(count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(updateCount, 1);
+                } else {
+                    counter.innerText = target;
+                }
+            };
+            updateCount();
+        };
+
+        // Intersection Observer for animations
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    if(entry.target.classList.contains('counter')) {
+                        runCounter(entry.target);
+                    }
+                    entry.target.classList.add('animate-in');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        // Observe all counters and service cards
+        counters.forEach(counter => observer.observe(counter));
+        document.querySelectorAll('.service-card').forEach(card => observer.observe(card));
+
+        // Add floating shapes to background
+        function createFloatingShapes() {
+            const container = document.createElement('div');
+            container.className = 'floating-shapes';
+            
+            for(let i = 0; i < 5; i++) {
+                const shape = document.createElement('div');
+                shape.className = 'floating-shape';
+                shape.style.width = Math.random() * 100 + 50 + 'px';
+                shape.style.height = shape.style.width;
+                shape.style.left = Math.random() * 100 + '%';
+                shape.style.top = Math.random() * 100 + '%';
+                shape.style.animationDelay = Math.random() * 10 + 's';
+                shape.style.animationDuration = (Math.random() * 20 + 20) + 's';
+                container.appendChild(shape);
+            }
+            
+            document.body.appendChild(container);
+        }
+        createFloatingShapes();
+
+        // Enhanced scroll animations
+        function revealOnScroll() {
+            const sections = document.querySelectorAll('section');
+            const windowHeight = window.innerHeight;
+            
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const revealPoint = 150;
+                
+                if (sectionTop < windowHeight - revealPoint && !section.classList.contains('revealed')) {
+                    section.classList.add('fade-in', 'revealed');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll();
+
+        // Active navigation highlight
+        window.addEventListener('scroll', function() {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            const scrollPosition = window.scrollY + 200;
+
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (scrollPosition >= sectionTop && scrollPosition <= sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            const navLinks = document.querySelectorAll('.nav-links a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').slice(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Add active link styling
+        const style = document.createElement('style');
+        style.textContent = `
+            .nav-links a.active {
+                color: var(--gold) !important;
+            }
+            .nav-links a.active::after {
+                width: 100% !important;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Emergency button pulse animation
+        setInterval(() => {
+            const emergencyBtn = document.querySelector('.btn-primary');
+            if (emergencyBtn) {
+                emergencyBtn.style.animation = 'pulse 1s';
+                setTimeout(() => {
+                    emergencyBtn.style.animation = '';
+                }, 1000);
+            }
+        }, 5000);
+
+        // Add pulse animation
+        const pulseStyle = document.createElement('style');
+        pulseStyle.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+        `;
+        document.head.appendChild(pulseStyle);
+    </script>
+</body>
+</html>
             
